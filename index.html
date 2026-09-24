@@ -127,7 +127,7 @@
             gap: 15px;
         }
 
-        .bet-input {
+        .bet-input, .user-input {
             background: #000;
             border: 1px solid var(--neon-cyan);
             color: #fff;
@@ -136,6 +136,11 @@
             border-radius: 5px;
             text-align: center;
             font-size: 1.1rem;
+        }
+
+        .user-input {
+            width: 60%;
+            font-size: 0.9rem;
         }
 
         .btn-group {
@@ -185,16 +190,25 @@
             margin-top: 20px;
             font-size: 1.3rem;
             font-weight: bold;
-            height: 30px;
+            min-height: 30px;
             color: var(--neon-cyan);
             text-shadow: 0 0 5px var(--neon-cyan);
+        }
+
+        /* PALOAD SYSTEM FOR PLAYERS */
+        .player-load-section {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
         }
 
         /* SECRET OWNER PANEL */
         .owner-panel {
             margin-top: 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px dashed rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
             padding: 15px;
             border-radius: 10px;
         }
@@ -212,11 +226,42 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            margin-bottom: 15px;
         }
 
         .owner-slider {
-            width: 60%;
+            width: 50%;
             accent-color: var(--neon-purple);
+        }
+
+        .admin-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .admin-input {
+            background: #000;
+            border: 1px solid var(--neon-purple);
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            text-align: center;
+            width: 100%;
+        }
+        .generated-code-box {
+            margin-top: 10px;
+            font-family: monospace;
+            background: #111;
+            padding: 5px;
+            border: 1px solid var(--neon-gold);
+            color: var(--neon-gold);
+            font-size: 0.9rem;
+            word-break: break-all;
+            user-select: all;
+            display: none;
         }
     </style>
 </head>
@@ -227,7 +272,7 @@
         <div class="subtitle">Online Games</div>
 
         <div class="stats-container">
-            <div class="stat-box">Balance: <span id="balance" class="stat-value">₱1,000</span></div>
+            <div class="stat-box">Balance: <span id="balance" class="stat-value">₱0</span></div>
             <div class="stat-box">Last Win: <span id="last-win" class="stat-value">₱0</span></div>
         </div>
 
@@ -254,70 +299,23 @@
             </div>
         </div>
 
-        <div class="message-box" id="message">✨ GOOD LUCK! ✨</div>
+        <div class="message-box" id="message">✨ MANGHINGI NG LOAD SA OWNER PARA MAKAPAGLARO! ✨</div>
+
+        <!-- PLAYER LOAD & CASH-OUT INTERFACE -->
+        <div class="player-load-section">
+            <div style="font-size: 0.9rem; margin-bottom: 8px; color: var(--neon-cyan)">💸 PLAYER STATION (CASH-IN / CASH-OUT)</div>
+            <input type="text" id="load-code-input" class="user-input" placeholder="I-paste dito ang Load Code mula kay Admin"><br>
+            <button style="padding: 5px 15px; font-size: 0.8rem; margin-top: 5px;" onclick="redeemLoadCode()">REDEEM LOAD</button>
+            <button style="padding: 5px 15px; font-size: 0.8rem; margin-top: 5px; border-color: #ff0055;" onclick="generateWithdrawCode()">CASH-OUT CODE</button>
+            <div id="withdraw-output" class="generated-code-box"></div>
+        </div>
 
         <!-- SECRET OPERATOR CONTROLS -->
         <div class="owner-panel">
-            <div class="owner-title">🕵️‍♂️ SECRET OWNER'S PANEL (WIN RATE CONTROLLER)</div>
+            <div class="owner-title">🕵️‍♂️ SECRET OWNER'S PANEL (WIN RATE & LOAD CONTROLLER)</div>
+            
+            <!-- Win Rate Slider -->
             <div class="slider-container">
+                <span style="font-size:0.8rem;">WIN RATE:</span>
                 <input type="range" id="win-rate-slider" class="owner-slider" min="1" max="100" value="18" oninput="updateWinRateDisplay()">
                 <span id="win-rate-disp" style="color: #ff0055; font-weight: bold;">18%</span>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let balance = 1000;
-        let isAutoSpinning = false;
-        let autoInterval = null;
-        let winRate = 18;
-
-        const targetWord = "BELLEVIEW";
-        const lettersPool = "BELLEVIEWABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        function updateWinRateDisplay() {
-            winRate = document.getElementById('win-rate-slider').value;
-            document.getElementById('win-rate-disp').innerText = winRate + "%";
-        }
-
-        function toggleAuto() {
-            const autoBtn = document.getElementById('auto-btn');
-            if (isAutoSpinning) {
-                clearInterval(autoInterval);
-                isAutoSpinning = false;
-                autoBtn.innerText = "AUTO SPIN";
-                autoBtn.classList.remove('active-auto');
-            } else {
-                isAutoSpinning = true;
-                autoBtn.innerText = "STOP AUTO";
-                autoBtn.classList.add('active-auto');
-                spin();
-                autoInterval = setInterval(spin, 1500);
-            }
-        }
-
-        function spin() {
-            const betInput = document.getElementById('bet');
-            let bet = parseInt(betInput.value) || 0;
-
-            if (bet <= 0) {
-                document.getElementById('message').innerText = "❌ Please enter a valid bet!";
-                if(isAutoSpinning) toggleAuto();
-                return;
-            }
-            if (balance < bet) {
-                document.getElementById('message').innerText = "❌ Insufficient Balance!";
-                if(isAutoSpinning) toggleAuto();
-                return;
-            }
-
-            balance -= bet;
-            document.getElementById('balance').innerText = "₱" + balance.toLocaleString();
-            document.getElementById('message').innerText = "⚡ Spinning...";
-            
-            // Remove previous winner highlights
-            for(let i=1; i<=9; i++) {
-                document.getElementById('r'+i).classList.remove('winner');
-            }
-
-            // Decide Win or Loss based on Owner's Win Rate
