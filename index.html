@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELLEVIEW ONLINE GAMES</title>
+    <style>
+        :root {
+            --neon-purple: #bc13fe;
+            --neon-cyan: #00f3ff;
+            --neon-gold: #ffd700;
+            --dark-bg: #0d0e15;
+            --panel-bg: #161925;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px var(--neon-purple), inset 0 0 10px rgba(0, 243, 255, 0.2);
+            border: 2px solid var(--neon-cyan);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 5px var(--neon-cyan);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-box {
+            font-size: 1.1rem;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: var(--neon-gold);
+            text-shadow: 0 0 5px var(--neon-gold);
+        }
+
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            background: #000;
+            padding: 20px 10px;
+            border-radius: 15px;
+            border: 2px solid var(--neon-purple);
+            box-shadow: inset 0 0 20px rgba(188, 19, 254, 0.5);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .reel {
+            width: 45px;
+            height: 70px;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 8px #fff;
+            transition: transform 0.1s ease-out;
+        }
+
+        .reel.winner {
+            color: var(--neon-gold);
+            text-shadow: 0 0 10px var(--neon-gold), 0 0 20px var(--neon-gold);
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bet-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .bet-input {
+            background: #000;
+            border: 1px solid var(--neon-cyan);
+            color: #fff;
+            padding: 8px;
+            width: 100px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--neon-cyan);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+
+        button:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        button.btn-spin {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 10px rgba(188, 19, 254, 0.2);
+        }
+
+        button.btn-spin:hover {
+            background: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 20px var(--neon-purple);
+        }
+
+        button.active-auto {
+            background: #ff0055;
+            border-color: #ff0055;
+            box-shadow: 0 0 20px #ff0055;
+        }
+
+        .message-box {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            height: 30px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 5px var(--neon-cyan);
+        }
+
+        /* SECRET OWNER PANEL */
+        .owner-panel {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .owner-title {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .owner-slider {
+            width: 60%;
+            accent-color: var(--neon-purple);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>BELLEVIEW</h1>
+        <div class="subtitle">Online Games</div>
+
+        <div class="stats-container">
+            <div class="stat-box">Balance: <span id="balance" class="stat-value">₱1,000</span></div>
+            <div class="stat-box">Last Win: <span id="last-win" class="stat-value">₱0</span></div>
+        </div>
+
+        <div class="slot-machine">
+            <div class="reel" id="r1">B</div>
+            <div class="reel" id="r2">E</div>
+            <div class="reel" id="r3">L</div>
+            <div class="reel" id="r4">L</div>
+            <div class="reel" id="r5">E</div>
+            <div class="reel" id="r6">V</div>
+            <div class="reel" id="r7">I</div>
+            <div class="reel" id="r8">E</div>
+            <div class="reel" id="r9">W</div>
+        </div>
+
+        <div class="controls">
+            <div class="bet-control">
+                <label for="bet">BET AMOUNT:</label>
+                <input type="number" id="bet" class="bet-input" value="10" min="1">
+            </div>
+            <div class="btn-group">
+                <button class="btn-spin" id="spin-btn" onclick="spin()">SPIN</button>
+                <button id="auto-btn" onclick="toggleAuto()">AUTO SPIN</button>
+            </div>
+        </div>
+
+        <div class="message-box" id="message">✨ GOOD LUCK! ✨</div>
+
+        <!-- SECRET OPERATOR CONTROLS -->
+        <div class="owner-panel">
+            <div class="owner-title">🕵️‍♂️ SECRET OWNER'S PANEL (WIN RATE CONTROLLER)</div>
+            <div class="slider-container">
+                <input type="range" id="win-rate-slider" class="owner-slider" min="1" max="100" value="18" oninput="updateWinRateDisplay()">
+                <span id="win-rate-disp" style="color: #ff0055; font-weight: bold;">18%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let balance = 1000;
+        let isAutoSpinning = false;
+        let autoInterval = null;
+        let winRate = 18;
+
+        const targetWord = "BELLEVIEW";
+        const lettersPool = "BELLEVIEWABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        function updateWinRateDisplay() {
+            winRate = document.getElementById('win-rate-slider').value;
+            document.getElementById('win-rate-disp').innerText = winRate + "%";
+        }
+
+        function toggleAuto() {
+            const autoBtn = document.getElementById('auto-btn');
+            if (isAutoSpinning) {
+                clearInterval(autoInterval);
+                isAutoSpinning = false;
+                autoBtn.innerText = "AUTO SPIN";
+                autoBtn.classList.remove('active-auto');
+            } else {
+                isAutoSpinning = true;
+                autoBtn.innerText = "STOP AUTO";
+                autoBtn.classList.add('active-auto');
+                spin();
+                autoInterval = setInterval(spin, 1500);
+            }
+        }
+
+        function spin() {
+            const betInput = document.getElementById('bet');
+            let bet = parseInt(betInput.value) || 0;
+
+            if (bet <= 0) {
+                document.getElementById('message').innerText = "❌ Please enter a valid bet!";
+                if(isAutoSpinning) toggleAuto();
+                return;
+            }
+            if (balance < bet) {
+                document.getElementById('message').innerText = "❌ Insufficient Balance!";
+                if(isAutoSpinning) toggleAuto();
+                return;
+            }
+
+            balance -= bet;
+            document.getElementById('balance').innerText = "₱" + balance.toLocaleString();
+            document.getElementById('message').innerText = "⚡ Spinning...";
+            
+            // Remove previous winner highlights
+            for(let i=1; i<=9; i++) {
+                document.getElementById('r'+i).classList.remove('winner');
+            }
+
+            // Decide Win or Loss based on Owner's Win Rate
