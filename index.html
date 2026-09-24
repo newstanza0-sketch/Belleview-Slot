@@ -139,7 +139,7 @@
         }
 
         .user-input {
-            width: 60%;
+            width: 80%;
             font-size: 0.9rem;
         }
 
@@ -188,7 +188,7 @@
 
         .message-box {
             margin-top: 20px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             min-height: 30px;
             color: var(--neon-cyan);
@@ -197,7 +197,7 @@
 
         /* PALOAD SYSTEM FOR PLAYERS */
         .player-load-section {
-            margin-top: 20px;
+            margin-top: 25px;
             background: rgba(0,0,0,0.3);
             padding: 15px;
             border-radius: 10px;
@@ -218,7 +218,7 @@
             color: rgba(255,255,255,0.4);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .slider-container {
@@ -246,22 +246,24 @@
             background: #000;
             border: 1px solid var(--neon-purple);
             color: #fff;
-            padding: 5px;
-            border-radius: 4px;
+            padding: 8px;
+            border-radius: 5px;
             text-align: center;
             width: 100%;
+            font-size: 0.9rem;
         }
         .generated-code-box {
             margin-top: 10px;
             font-family: monospace;
             background: #111;
-            padding: 5px;
+            padding: 8px;
             border: 1px solid var(--neon-gold);
             color: var(--neon-gold);
             font-size: 0.9rem;
             word-break: break-all;
             user-select: all;
             display: none;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -305,8 +307,8 @@
         <div class="player-load-section">
             <div style="font-size: 0.9rem; margin-bottom: 8px; color: var(--neon-cyan)">💸 PLAYER STATION (CASH-IN / CASH-OUT)</div>
             <input type="text" id="load-code-input" class="user-input" placeholder="I-paste dito ang Load Code mula kay Admin"><br>
-            <button style="padding: 5px 15px; font-size: 0.8rem; margin-top: 5px;" onclick="redeemLoadCode()">REDEEM LOAD</button>
-            <button style="padding: 5px 15px; font-size: 0.8rem; margin-top: 5px; border-color: #ff0055;" onclick="generateWithdrawCode()">CASH-OUT CODE</button>
+            <button style="padding: 6px 15px; font-size: 0.8rem; margin-top: 8px;" onclick="redeemLoadCode()">REDEEM LOAD</button>
+            <button style="padding: 6px 15px; font-size: 0.8rem; margin-top: 8px; border-color: #ff0055;" onclick="generateWithdrawCode()">CASH-OUT CODE</button>
             <div id="withdraw-output" class="generated-code-box"></div>
         </div>
 
@@ -318,4 +320,3 @@
             <div class="slider-container">
                 <span style="font-size:0.8rem;">WIN RATE:</span>
                 <input type="range" id="win-rate-slider" class="owner-slider" min="1" max="100" value="18" oninput="updateWinRateDisplay()">
-                <span id="win-rate-disp" style="color: #ff0055; font-weight: bold;">18%</span>
