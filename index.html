@@ -195,7 +195,6 @@
             text-shadow: 0 0 5px var(--neon-cyan);
         }
 
-        /* PALOAD SYSTEM FOR PLAYERS */
         .player-load-section {
             margin-top: 25px;
             background: rgba(0,0,0,0.3);
@@ -204,7 +203,6 @@
             border: 1px solid rgba(0, 243, 255, 0.3);
         }
 
-        /* SECRET OWNER PANEL */
         .owner-panel {
             margin-top: 40px;
             background: rgba(255, 255, 255, 0.02);
@@ -242,6 +240,7 @@
             max-width: 300px;
             margin: 0 auto;
         }
+
         .admin-input {
             background: #000;
             border: 1px solid var(--neon-purple);
@@ -251,7 +250,9 @@
             text-align: center;
             width: 100%;
             font-size: 0.9rem;
+            box-sizing: border-box;
         }
+
         .generated-code-box {
             margin-top: 10px;
             font-family: monospace;
@@ -316,7 +317,7 @@
         <div class="owner-panel">
             <div class="owner-title">🕵️‍♂️ SECRET OWNER'S PANEL (WIN RATE & LOAD CONTROLLER)</div>
             
-            <!-- Win Rate Slider -->
             <div class="slider-container">
                 <span style="font-size:0.8rem;">WIN RATE:</span>
                 <input type="range" id="win-rate-slider" class="owner-slider" min="1" max="100" value="18" oninput="updateWinRateDisplay()">
+                <span id="win-rate-disp" style="color: #ff0055; font-weight: bold;">18%</span>
